@@ -2,7 +2,13 @@
    v2.0 | 20110126
    License: none (public domain)
 */
-
+:root {
+	--vert:#1D6154;
+	--orange:#B1663C;
+	--white: white;
+	--black:#000000;
+	--motDePasse:#3D3D3D;
+}
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -50,7 +56,7 @@ table {
 body {
 	max-width: 1140px;
 	margin:auto;
-	font-family: 'Work Sans' ;
+	font-family: 'Work Sans';
 	font-size: 14px;
 }
 header {
@@ -68,7 +74,7 @@ h1{
 	font-family: 'Syne';
 	font-size: 22px;
 	font-weight: 800;
-	color: #B1663C
+	color: var(--orange);
 }
 
 h1 > span {
@@ -82,7 +88,7 @@ h2{
 	font-family: 'Syne';
 	font-weight: 700;
 	font-size: 30px;
-	color: #1D6154
+	color: var(--vert);
 }
 nav ul {
 	display: flex;
@@ -90,27 +96,51 @@ nav ul {
 	list-style-type: none;
 
 }
+#bold {
+	font-weight: 600;
+}
+#out {
+	display: none;
+}
 nav li {
 	padding: 0 10px;
 	font-size: 1.2em;
+	cursor: pointer;
 }
-
+nav a {
+	text-decoration: none;
+	color: var(--black);
+}
+nav ul li img {
+	width: 1.2em;
+	height: 1.2em;
+}
 li:hover {
-	color: #B1663C;
+	color: var(--orange);
+	font-weight: 700;
 }
 #introduction {
 	display: flex;
 	align-items: center;
+	margin: 120px 5em 0 5em;
 }
 #introduction figure {
 	flex: 1
 }
 #introduction img {
 	display: block;
-	margin: auto;
+	margin-bottom: 10px;
 	width: 80%;
 }
-
+#fig a {
+	text-decoration: none;
+	color: #000000;
+	display: none;
+}
+#fig a:hover {
+	font-weight: 700;
+	color: var(--vert);
+}
 #introduction article {
 	flex: 1
 }
@@ -121,32 +151,79 @@ li:hover {
 #introduction p {
 	margin-bottom: 0.5em;
 }
+#portfolio {
+	margin: 0 5em;
+}
 #portfolio h2 {
 	text-align: center;
-	margin-bottom: 1em;
+	margin: 2em 0 1em 0;
+	transition: 0.3s;
 }
-.gallery {
+.containerModale {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 30px;
+}
+.containerModale a {
+	text-decoration: none;
+	color: #000000;
+	display: none;
+}
+.containerModale a:hover {
+	font-weight: 700;
+	color: var(--vert);
+}
+#portfolio input[name="filtre"] {
+	display: none;
+}
+#portfolio label span {
+	border: var(--vert) 1px solid;
+    border-radius: 25px;
+    padding: 10px 20px;
+    user-select: none;
+    flex-wrap: nowrap;
+	cursor: pointer;
+	font-weight: 700;
+	font-family: 'syne';
+	font-size: 16px;
+	color: var(--vert);
+}
+#portfolio label span:hover {
+	background: var(--vert);
+	color: var(--white);
+	transition: 0.3s;
+}
+#portfolio label input[name="filtre"]:checked ~ span {
+	background: var(--vert);
+	color: var(--white);
+} 
+.filtres {
+	margin: 3em 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+}
+.gallery div {
 	width: 100%;
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
 	grid-column-gap: 20px;
 	grid-row-gap: 20px;
 }
-
-.gallery img {
+.gallery div img {
 	width: 100%;
-
 }
 #contact {
 	width: 50%;
-margin: auto;
+	margin: auto;
 }
 #contact > * {
 	text-align: center;
-
 }
 #contact h2{
-	margin-bottom: 20px;
+	margin: 50px 0 20px 0;
 }
 #contact form {
 	text-align: left;
@@ -169,20 +246,66 @@ margin: auto;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
 
-input[type="submit"]{
+input[type="submit"] {
 	font-family: 'Syne';
 	font-weight: 700;
-	color: white;
-	background-color: #1D6154;
+	color: var(--white);
+	background-color: var(--vert);
 	margin : 2em auto ;
 	width: 180px;
 	text-align: center;
 	border-radius: 60px ;
+	cursor: pointer;
 }
-
+input[type="submit"]:hover {
+	color: var(--vert);
+	background: var(--white);
+	transition: 0.3s;
+}
 footer nav ul {
 	display: flex;
 	justify-content: flex-end;
 	margin: 2em
 }
-
+.main {
+	margin-top: 180px;
+}
+#login {
+	width: 50%;
+	margin: auto;
+}
+#login input {
+	height: 50px;
+	font-size: 1.2em;
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+#login > * {
+	text-align: center;
+}
+#login h2{
+	margin-bottom: 20px;
+}
+#login form {
+	text-align: left;
+	margin-top:30px;
+	display: flex;
+	flex-direction: column;
+}
+#login label {
+	margin: 2em 0 1em 0;
+}
+.motDePasse {
+	display: flex;
+	width: 100%;
+	justify-content: center;
+}
+#motDePasseOublie {
+	color: var(--motDePasse);
+	font-weight: 500;
+	font-size: 14px;
+	font-family: 'Work Sans';
+}
+.foot {
+	margin-top: 240px;
+}

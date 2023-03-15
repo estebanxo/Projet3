@@ -15,17 +15,24 @@
 	<h1>Sophie Bluel <span>Architecte d'inteérieur</span></h1>
 	<nav>
 		<ul>
-			<li>projets</li>
-			<li>contact</li>
-			<li>login</li>
+			<a href="#portfolio"><li>projets</li></a>
+			<a href="#contact"><li>contact</li></a>
+			<a href="./assets/login.html"><li id="in">login</li></a>
+			<a id="log" href="#"><li id="out">logout</li></a>
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 		</ul>
 	</nav>
 </header>
 <main>
 	<section id="introduction">
-		<figure>
+		<figure id="figure">
 			<img src="./assets/images/sophie-bluel.png" alt="">
+			<figcaption id="fig">
+				<a href="#">
+					<i class="fa-sharp fa-regular fa-pen-to-square"></i>
+					<span>modifier</span>
+				</a>
+			</figcaption>
 		</figure>
 		<article>
 			<h2>Designer d'espace</h2>
@@ -35,52 +42,32 @@
 		</article>
 	</section>
 	<section id="portfolio">
-		<h2>Mes Projets</h2>
+		<div class="containerModale">
+			<h2>Mes Projets</h2>
+			<a href="#modal">
+				<i class="fa-sharp fa-regular fa-pen-to-square"></i>
+				<span>modifier</span>
+			</a>
+		</div>
+		<form action="http://localhost:5678/api/works" method="get" class="filtres">
+			<label for="tous">
+				<input type="radio" name="filtre" id="tous" value=0 checked>
+				<span>Tous</span>
+			</label>
+			<label for="objets">
+				<input type="radio" name="filtre" id="objets" value=1>
+				<span>Objets</span>
+			</label>
+			<label for="appartements">
+				<input type="radio" name="filtre" id="appartements" value=2>
+				<span>Appartements</span>
+			</label>
+			<label for="hotelsRestaurants">
+				<input type="radio" name="filtre" id="hotelsRestaurants" value=3>
+				<span>Hôtels & restaurants</span>
+			</label>
+		</form>
 		<div class="gallery">
-			<figure>
-				<img src="assets/images/abajour-tahina.png" alt="Abajour Tahina">
-				<figcaption>Abajour Tahina</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/appartement-paris-v.png" alt="Appartement Paris V">
-				<figcaption>Appartement Paris V</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/restaurant-sushisen-londres.png" alt="Restaurant Sushisen - Londres">
-				<figcaption>Restaurant Sushisen - Londres</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/la-balisiere.png" alt="Villa “La Balisiere” - Port Louis">
-				<figcaption>Villa “La Balisiere” - Port Louis</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/structures-thermopolis.png" alt="Structures Thermopolis">
-				<figcaption>Structures Thermopolis</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/appartement-paris-x.png" alt="Appartement Paris X">
-				<figcaption>Appartement Paris X</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/le-coteau-cassis.png" alt="Pavillon “Le coteau” - Cassis">
-				<figcaption>Pavillon “Le coteau” - Cassis</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/villa-ferneze.png" alt="Villa Ferneze - Isola d’Elba">
-				<figcaption>Villa Ferneze - Isola d’Elba</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/appartement-paris-xviii.png" alt="Appartement Paris XVIII">
-				<figcaption>Appartement Paris XVIII</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/bar-lullaby-paris.png" alt="Bar “Lullaby” - Paris">
-				<figcaption>Bar “Lullaby” - Paris</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/hotel-first-arte-new-delhi.png" alt="Hotel First Arte - New Delhi">
-				<figcaption>Hotel First Arte - New Delhi</figcaption>
-			</figure>
 		</div>
 	</section>
 	<section id="contact">
@@ -105,5 +92,6 @@
 		</ul>
 	</nav>
 </footer>
-</body>
+<script src="./js/projets.js"></script>
+<script src="https://kit.fontawesome.com/5196d26c84.js" crossorigin="anonymous"></script></body>
 </html>
