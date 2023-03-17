@@ -92,7 +92,7 @@ if (token) {
     modal.removeAttribute('aria-hidden');
     modal.setAttribute('aria-modal', 'true');
     modal.addEventListener('click', closeModal);
-    document.querySelector(".jsModalClose").addEventListener("click", closeModal);
+    document.querySelector("#jsModalClose").addEventListener("click", closeModal);
     document.querySelector(".jsModalStop").addEventListener("click", stopPropagation);
   })
 
@@ -104,7 +104,7 @@ if (token) {
     modal.setAttribute('aria-hidden', 'true');
     modal.removeAttribute('aria-modal');
     modal.removeEventListener('click', closeModal);
-    document.querySelector(".jsModalClose").removeEventListener("click", closeModal);
+    document.querySelector("#jsModalClose").removeEventListener("click", closeModal);
     document.querySelector(".jsModalStop").removeEventListener("click", stopPropagation);
   }
   
@@ -152,4 +152,7 @@ if (token) {
     // Une erreur est survenue
   });
   
+  document.querySelector(".buttonPhoto").addEventListener("click", function () {
+
+  })
 }

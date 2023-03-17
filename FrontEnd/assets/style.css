@@ -236,10 +236,15 @@ li:hover {
 	flex-direction: column;
 	justify-content: end;
 }
-.jsModalClose {
+.jsModal {
 	border: none;
 	cursor: pointer;
 	width: 20px;
+}
+#jsModalReturn {
+	display: none;
+}
+#jsModalClose {
 	margin-left: 585px;
 }
 #titleModal {
@@ -400,8 +405,10 @@ input[name="delete"]:checked ~ .edit {
 	margin: 2em 0 1em 0;
 }
 #contact textarea {
+	overflow: auto;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	resize: none;
 }
 
 input[type="submit"] {
