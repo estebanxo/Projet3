@@ -11,6 +11,15 @@
 	<link rel="stylesheet" href="./assets/style.css">
 </head>
 <body>
+<aside id="publication">
+	<div>
+		<a href="#">
+			<i class="fa-sharp fa-regular fa-pen-to-square"></i>
+			<span>modifier</span>
+		</a>
+		<button id="publier">publier les changements</button>
+	</div>
+</aside>
 <header>
 	<h1>Sophie Bluel <span>Architecte d'inteérieur</span></h1>
 	<nav>
@@ -44,10 +53,21 @@
 	<section id="portfolio">
 		<div class="containerModale">
 			<h2>Mes Projets</h2>
-			<a href="#modal">
+			<a href="#modal1" class="modalLink">
 				<i class="fa-sharp fa-regular fa-pen-to-square"></i>
 				<span>modifier</span>
 			</a>
+			<aside id="modal1" class="modal" aria-hidden="true" role="dialog" aria-labelledby="titleModal" style="display: none;">
+				<div class="modalWrapper jsModalStop">
+					<button class="jsModalClose"> <i class="fa-sharp fa-solid fa-xmark"></i> </button>
+					<h3 id="titleModal">Galerie photo</h3>
+					<div id="galeriePhoto"></div>
+					<div class="btn">
+						<button class="buttonPhoto" type="button">Ajouter une photo</button>
+						<a href="#" class="supprimer">Supprimer la galerie</a>
+					</div>
+				</div>
+			</aside>
 		</div>
 		<form action="http://localhost:5678/api/works" method="get" class="filtres">
 			<label for="tous">
@@ -67,8 +87,7 @@
 				<span>Hôtels & restaurants</span>
 			</label>
 		</form>
-		<div class="gallery">
-		</div>
+		<div class="gallery"></div>
 	</section>
 	<section id="contact">
 		<h2>Contact</h2>

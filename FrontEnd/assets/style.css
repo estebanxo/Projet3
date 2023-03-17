@@ -8,6 +8,7 @@
 	--white: white;
 	--black:#000000;
 	--motDePasse:#3D3D3D;
+	--rouge:#D65353;
 }
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -34,8 +35,14 @@ article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
+.supprimer:focus {
+	color: var(--vert);
+	font-weight: 700;
+}
 body {
 	line-height: 1;
+	font-family: 'Work Sans';
+	font-size: 14px;
 }
 ol, ul {
 	list-style: none;
@@ -53,16 +60,48 @@ table {
 	border-spacing: 0;
 }
 /** end reset css**/
-body {
+header, main, footer {
 	max-width: 1140px;
 	margin:auto;
-	font-family: 'Work Sans';
-	font-size: 14px;
+}
+#publication {
+	background: var(--black);
+	width: 100vw;
+	height: 60px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+#publication {
+	display: none;
+}
+#publication div {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 20px;
+}
+#publication div a {
+	text-decoration: none;
+	color: var(--white);
+}
+#publication div a:hover {
+	font-weight: 700;
+}
+#publication div button {
+	font-weight: 700;
+	color: var(--black);
+	background-color: var(--white);
+	width: 180px;
+	height: 40px;
+	border-radius: 60px ;
+	cursor: pointer;
+	border: none;
 }
 header {
 	display: flex;
 	justify-content: space-between;
-	margin: 50px 0
+	margin: 50px auto
 }
 section {
 	margin: 50px 0
@@ -174,10 +213,129 @@ li:hover {
 	font-weight: 700;
 	color: var(--vert);
 }
+.modal {
+	position: fixed;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.3);
+}
+.modalWrapper {
+	overflow: auto;
+	width: 630px;
+	max-width: calc(100vw - 20px);
+	max-height: calc(100vh - 20px);
+	background: var(--white);
+	padding: 30px;
+	border-radius: 10px;
+	display: flex;
+	flex-direction: column;
+	justify-content: end;
+}
+.jsModalClose {
+	border: none;
+	cursor: pointer;
+	width: 20px;
+	margin-left: 585px;
+}
+#titleModal {
+	font-family: 'Work Sans';
+    font-weight: 700;
+    font-size: 26px;
+    color: var(--vert);
+	text-align: center;
+	margin-top: 10px;
+}
+#galeriePhoto {
+	width: 420px;
+	margin: auto;
+	padding: 50px 0;
+	border-bottom: #B3B3B3 solid 1px;
+}
+#galeriePhoto div {
+	width: 100%;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+	grid-column-gap: 7px;
+	grid-row-gap: 7px;
+}
+#galeriePhoto img {
+	width: 100%;
+}
+.fa-arrows-up-down-left-right {
+	position: absolute;
+	top: 6px;
+	right: 30px;
+	padding: 4px;
+	border-radius: 2px;
+	background: var(--black);
+	color: var(--white);
+	z-index: -1;
+	transition: 0.3s;
+	cursor: pointer;
+}
+.edition:hover > .fa-arrows-up-down-left-right {
+	z-index: 1;
+	transition: 0.3s;
+}
+.fa-trash-can {
+	color: var(--white);
+}
+.edit {
+	position: absolute;
+	top: 6px;
+	right: 6px;
+	background: var(--black);
+	border-radius: 2px;
+	padding: 4px;
+	cursor: pointer;
+}
+.edition {
+	position: relative;
+}
+input[name="delete"] {
+	display: none;
+}
+input[name="delete"]:checked ~ .edit {
+	background: var(--vert);
+}
+.btn {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	margin-bottom: 20px;
+}
+.btn a {
+	display: block;
+	text-align: center;
+	color: var(--rouge);
+}
+.buttonPhoto {
+	font-family: 'Syne';
+	font-weight: 700;
+	color: var(--white);
+	background-color: var(--vert);
+	margin : 2em auto ;
+	width: 180px;
+	text-align: center;
+	border-radius: 60px ;
+	cursor: pointer;
+	border: none;
+	height: 50px;
+}
+.buttonPhoto:hover {
+	color: var(--vert);
+	background: var(--white);
+	transition: 0.3s;
+}
 #portfolio input[name="filtre"] {
 	display: none;
 }
-#portfolio label span {
+.filtres label span {
 	border: var(--vert) 1px solid;
     border-radius: 25px;
     padding: 10px 20px;
