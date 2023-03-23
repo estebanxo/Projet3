@@ -97,6 +97,13 @@ header, main, footer {
 	border-radius: 60px ;
 	cursor: pointer;
 	border: none;
+	transition: 0.2s;
+}
+#publication div button:hover {
+	color: var(--vert);
+	height: 45px;
+	width: 185px;
+	transition: 0.2s;
 }
 header {
 	display: flex;
@@ -154,7 +161,7 @@ nav ul li img {
 	width: 1.2em;
 	height: 1.2em;
 }
-li:hover {
+nav ul li a:hover {
 	color: var(--orange);
 	font-weight: 700;
 }
@@ -255,20 +262,87 @@ li:hover {
 	text-align: center;
 	margin-top: 10px;
 }
+#titleModal2 {
+	display: none;
+	font-family: 'Work Sans';
+    font-weight: 700;
+    font-size: 26px;
+    color: var(--vert);
+	text-align: center;
+	margin-top: 10px;
+}
+input[name="title"], select[name="categorie"] {
+	height: 50px;
+	border: none;
+}
+select[name="categorie"] {
+	cursor: pointer;
+	margin-left: 10px;
+}
+input[name="title"] {
+	margin-left: 10px;
+}
+input[name="title"]:hover {
+	background-color: #E8F1F6;
+}
+.weight {
+	font-weight: 600;
+}
+.containerPhoto {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 10px;
+	background-color: #E8F1F6;
+	border-radius: 3px;
+	padding: 20px;
+}
+.fa-image {
+	color: #B9C5CC;
+	font-size: 60px;
+	cursor: pointer;
+}
+#photo {
+	display: none;
+}
+.buttonAjoutPhoto {
+	font-weight: 600;
+	color: #306685;
+	background-color: #CBD6DC;
+	padding: 13px 31px;
+	text-align: center;
+	border-radius: 60px ;
+	cursor: pointer;
+	border: none;
+	transition: 0.2s;
+}
+.buttonAjoutPhoto:hover {
+	padding: 15px 34px;
+	transition: 0.2s;
+}
 #galeriePhoto {
 	width: 420px;
 	margin: auto;
 	padding: 50px 0;
 	border-bottom: #B3B3B3 solid 1px;
 }
+#formAjoutPhoto {
+	display: flex;
+	flex-direction: column;
+}
 #galeriePhoto div {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+#galeriePhoto #imgWorks {
 	width: 100%;
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 	grid-column-gap: 7px;
 	grid-row-gap: 7px;
 }
-#galeriePhoto img {
+#imgWorks img {
 	width: 100%;
 }
 .fa-arrows-up-down-left-right {
@@ -299,6 +373,9 @@ li:hover {
 	padding: 4px;
 	cursor: pointer;
 }
+.edit:hover {
+	background: var(--vert);
+}
 .edition {
 	position: relative;
 }
@@ -314,10 +391,15 @@ input[name="delete"]:checked ~ .edit {
 	justify-content: center;
 	margin-bottom: 20px;
 }
-.btn a {
-	display: block;
+.btn .supprimer {
+	font-family: 'Syne';
 	text-align: center;
 	color: var(--rouge);
+	border: none;
+	cursor: pointer;
+}
+.btn .supprimer:hover {
+	color: var(--vert);
 }
 .buttonPhoto {
 	font-family: 'Syne';
@@ -331,11 +413,36 @@ input[name="delete"]:checked ~ .edit {
 	cursor: pointer;
 	border: none;
 	height: 50px;
+	transition: 0.2s;
 }
 .buttonPhoto:hover {
 	color: var(--vert);
 	background: var(--white);
+	transition: 0.2s;
+}
+#resultat {
+	height: 170px;
+	width: 130px;
+}
+.valider {
+	display: none;
+	font-family: 'Syne';
+	font-weight: 700;
+	color: var(--white);
+	background-color: #A7A7A7;
+	margin : 2em auto ;
+	width: 180px;
+	text-align: center;
+	border-radius: 60px ;
+	cursor: pointer;
+	border: none;
+	height: 50px;
 	transition: 0.3s;
+}
+.valider:hover {
+	color: var(--vert);
+	background: var(--white);
+	transition: 0.2s;
 }
 #portfolio input[name="filtre"] {
 	display: none;
@@ -351,11 +458,12 @@ input[name="delete"]:checked ~ .edit {
 	font-family: 'syne';
 	font-size: 16px;
 	color: var(--vert);
+	transition: 0.2s;
 }
-#portfolio label span:hover {
+#portfolio label .lesFiltres:hover {
 	background: var(--vert);
 	color: var(--white);
-	transition: 0.3s;
+	transition: 0.2s;
 }
 #portfolio label input[name="filtre"]:checked ~ span {
 	background: var(--vert);
@@ -421,11 +529,12 @@ input[type="submit"] {
 	text-align: center;
 	border-radius: 60px ;
 	cursor: pointer;
+	transition: 0.2s;
 }
 input[type="submit"]:hover {
 	color: var(--vert);
 	background: var(--white);
-	transition: 0.3s;
+	transition: 0.2s;
 }
 footer nav ul {
 	display: flex;

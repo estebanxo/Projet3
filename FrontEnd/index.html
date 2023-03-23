@@ -24,16 +24,16 @@
 	<h1>Sophie Bluel <span>Architecte d'inteérieur</span></h1>
 	<nav>
 		<ul>
-			<a href="#portfolio"><li>projets</li></a>
-			<a href="#contact"><li>contact</li></a>
-			<a href="./assets/login.html"><li id="in">login</li></a>
-			<a id="log" href="#"><li id="out">logout</li></a>
-			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
+			<li> <a href="#portfolio">projets</a> </li>
+			<li> <a href="#contact">contact</a> </li>
+			<li id="in"> <a href="./assets/login.html">login</a> </li>
+			<li id="out"> <a id="log" href="#">logout</a> </li>
+			<li> <img src="./assets/icons/instagram.png" alt="Instagram"> </li>
 		</ul>
 	</nav>
 </header>
 <main>
-	<section id="introduction">
+	<div id="introduction">
 		<figure id="figure">
 			<img src="./assets/images/sophie-bluel.png" alt="">
 			<figcaption id="fig">
@@ -49,7 +49,7 @@
 			<p>Chaque projet sera étudié en commun, de façon à mettre en valeur les volumes, les matières et les couleurs dans le respect de l’esprit des lieux et le choix adapté des matériaux. Le suivi du chantier sera assuré dans le souci du détail, le respect du planning et du budget.</p>
 			<p>En cas de besoin, une équipe pluridisciplinaire peut-être constituée : architecte DPLG, décorateur(trice)</p>
 		</article>
-	</section>
+	</div>
 	<section id="portfolio">
 		<div class="containerModale">
 			<h2>Mes Projets</h2>
@@ -57,37 +57,41 @@
 				<i class="fa-sharp fa-regular fa-pen-to-square"></i>
 				<span>modifier</span>
 			</a>
-			<aside id="modal1" class="modal" aria-hidden="true" role="dialog" aria-labelledby="titleModal" style="display: none;">
+			<div id="modal1" class="modal" aria-hidden="true" role="dialog" aria-labelledby="titleModal" style="display: none;">
 				<div class="modalWrapper jsModalStop">
 					<div>
 						<button class="jsModal" id="jsModalReturn"> <i class="fa-sharp fa-solid fa-arrow-left-long"></i> </button>
 						<button class="jsModal" id="jsModalClose"> <i class="fa-sharp fa-solid fa-xmark"></i> </button>
 					</div>
 					<h3 id="titleModal">Galerie photo</h3>
-					<div id="galeriePhoto"></div>
-					<div class="btn">
-						<button class="buttonPhoto" type="button">Ajouter une photo</button>
-						<a href="#" class="supprimer">Supprimer la galerie</a>
-					</div>
+					<h3 id="titleModal2">Ajout photo</h3>
+					<form action="http://localhost:5678/api/works" method="post" id="formAjoutPhoto">
+						<div id="galeriePhoto"></div>
+						<div class="btn">
+							<button class="buttonPhoto" type="button">Ajouter une photo</button>
+							<input class="valider" name="valider" type="submit" value="Valider">
+							<button class="supprimer" type="button">Supprimer la galerie</button>
+						</div>
+					</form> 
 				</div>
-			</aside>
+			</div>
 		</div>
 		<form action="http://localhost:5678/api/works" method="get" class="filtres">
 			<label for="tous">
 				<input type="radio" name="filtre" id="tous" value=0 checked>
-				<span>Tous</span>
+				<span class="lesFiltres">Tous</span>
 			</label>
 			<label for="objets">
 				<input type="radio" name="filtre" id="objets" value=1>
-				<span>Objets</span>
+				<span class="lesFiltres">Objets</span>
 			</label>
 			<label for="appartements">
 				<input type="radio" name="filtre" id="appartements" value=2>
-				<span>Appartements</span>
+				<span class="lesFiltres">Appartements</span>
 			</label>
 			<label for="hotelsRestaurants">
 				<input type="radio" name="filtre" id="hotelsRestaurants" value=3>
-				<span>Hôtels & restaurants</span>
+				<span class="lesFiltres">Hôtels & restaurants</span>
 			</label>
 		</form>
 		<div class="gallery"></div>
