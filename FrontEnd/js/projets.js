@@ -337,20 +337,21 @@ if (token) {
     }
     
 
-
+    //                                       requête Post 
 
     document.querySelector(".valider").addEventListener("click", function(e) {
       e.preventDefault();
   
       let title = document.getElementById("title").value;
-  
       console.log(title);
+
       let photo = localStorage.getItem('imgData');
       console.log(photo);
   
       console.log(findSelectElts());
       
       console.log(localStorage.getItem('lastId'));
+      
       console.log(token.userId);
   
       if(photo === null) {
