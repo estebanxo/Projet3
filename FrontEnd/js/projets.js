@@ -26,7 +26,8 @@ fetch("http://localhost:5678/api/works")
   const tous = value.filter(obj => obj.categoryId > 0);
   console.log(tous);
   const last = tous[tous.length-1];
-  console.log(last.id);
+  console.log(last.id + 1);
+  localStorage.setItem('lastId', JSON.stringify(last.id + 1));
 
   const objets = value.filter(obj => obj.categoryId == 1);
   console.log(objets);
@@ -63,13 +64,12 @@ fetch("http://localhost:5678/api/works")
   // Une erreur est survenue
 });
 
-// for (var i = 0; i < localStorage.length; i++) {
-//   console.log(localStorage.getItem(localStorage.key(i)));
-// }
-
+console.log(localStorage.getItem('lastId'));
 console.log(localStorage.getItem('tokens'));
 const token = JSON.parse(localStorage.getItem('tokens'));
-console.log(token.token);
+const tokens = token.token;
+console.log(tokens);
+
 
 if (token) {
   document.querySelector('#in').style.display = "none";
@@ -79,6 +79,7 @@ if (token) {
     localStorage.removeItem('tokens');
     location.reload();
   });
+
 
   document.querySelector("#publication").style.display = "flex";
   document.querySelector("header").style.margin = "40px auto 50px auto";
@@ -172,7 +173,8 @@ if (token) {
         body: null,
         headers: {
           "Content-type": "application/json; charsert=UTF-8",
-        },
+          // Authorization: `Bearer ${tokens}`
+        }
       })
       .then((reponse) => reponse.json())
 
@@ -202,7 +204,7 @@ if (token) {
     affichage += '<label class="containerPhoto" for="photo">';
     affichage += '<span id="img"> <i class="fa-regular fa-image"></i> </span>';
     affichage += '<span class="buttonAjoutPhoto"> + Ajouter photo </span>';
-    affichage += '<input type="file" id="photo" name="photo" accept="image/*" onchange="afficheImage();">'
+    affichage += '<input type="file" id="photo" name="photo" accept=".jpg, .jpeg, .png" onchange="afficheImage(this);">'
     affichage += '<span id="imgNotification">jpg, png : 4mo max</span>';
     affichage += '</label>';
 
@@ -211,9 +213,9 @@ if (token) {
 
     affichage += '<label class="weight" for="categorie">Catégorie</label>';
     affichage += '<select name="categorie" id="categorie">';
-    affichage += '<option name="option" value="1">Objets</option>';
-    affichage += '<option name="option" value="2">Appartements</option>';
-    affichage += '<option name="option" value="3" selected>Hotels & Restaurants</option>';
+    affichage += '<option value="1">Objets</option>';
+    affichage += '<option value="2">Appartements</option>';
+    affichage += '<option value="3" selected>Hotels & Restaurants</option>';
     affichage += '</select>';
 
     affichage += "</div>";
@@ -221,27 +223,85 @@ if (token) {
 
   })
 
-  function afficheImage() {
+
+
+  function getBase64Image(img) {
+    var canvas = document.createElement("canvas");
+    canvas.width = img.width;
+    canvas.height = img.height;
+
+    var ctx = canvas.getContext("2d");
+    ctx.drawImage(img, 0, 0);
+
+    var dataURL = canvas.toDataURL("image/png");
+
+    return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+  }
+
+
+  
+
+  function afficheImage(input) {
     let file = document.querySelector('input[type="file"]').files;
-    console.log(file);
+    console.log(file[0]);
     if(file.length = 1) {
       document.querySelector("#img").style.display = "none";
       document.querySelector(".buttonAjoutPhoto").style.display = "none";
       document.querySelector("#photo").style.display = "none";
       document.querySelector("#imgNotification").style.display = "none";
       document.querySelector(".containerPhoto").style.padding = "0";
-      let newAffichage = '<img id="resultat">';
+      let newAffichage = '<img src="" id="resultat">';
       document.querySelector(".containerPhoto").innerHTML = newAffichage;
 
-      let fileReader = new FileReader();
-      fileReader.onload = function (event) {
-        document
-          .getElementById("resultat")
-          .setAttribute('src', event.target.result);
+      
+
+      // var dataImage = localStorage.getItem('imgData');
+      // bannerImg = document.getElementById('resultat');
+      // bannerImg.src = "data:image/png;base64," + dataImage;
+    
+
+      document.getElementById("resultat").style.display = "block";
+
+      if (input.files && input.files[0]) {
+          let reader = new FileReader();
+  
+          reader.onload = function (e) {
+              document.getElementById('resultat').src =  e.target.result;
+          }
+  
+          reader.readAsDataURL(input.files[0]);
       }
-      fileReader.readAsDataURL(file[0]);
+
+
+      bannerImage = document.getElementById('resultat');
+      console.log(bannerImage);
+      imgData = getBase64Image(bannerImage);
+      localStorage.setItem("imgData", imgData);
+      console.log(localStorage.getItem('imgData'));
+
+
+      // let fileReader = new FileReader();
+
+      // fileReader.onload = function (event) {
+      //   const srcData = fileReader.result;
+      //   console.log(srcData);
+      //   document
+      //     .getElementById("resultat")
+      //     .setAttribute('src', event.target.result);
+      // }
+      // fileReader.readAsDataURL(file[0]);
+      
+
+      // localStorage.setItem('monImage', image);
+      // fileReader.addEventListener('load', () => {
+      //   localStorage.setItem('monImage', fileReader.result)
+      // })
     }
   }
+
+  
+
+
 
   fetch("http://localhost:5678/api/categories")
   .then((res) => {
@@ -252,62 +312,125 @@ if (token) {
   .then((value) => {
 
     const objets = value.filter(obj => obj.id == 1);
-    console.log(objets);
+    console.log(objets[0]);
 
     const appartements = value.filter(obj => obj.id == 2);
-    console.log(appartements);
+    console.log(appartements[0]);
 
     const hotelsRestaurants = value.filter(obj => obj.id == 3);
-    console.log(hotelsRestaurants);
+    console.log(hotelsRestaurants[0]);
 
     let findSelectElts = () => {
-      let selectedOption = document.querySelector("option[name='option']:selected").value;
+      let select = document.getElementById("categorie");
+      let choice = select.selectedIndex;
+      let selectedOption = select.options[choice].value;
+      
       if (selectedOption == 1) {
-        return objets;
+        return objets[0].name;
       }
       else if (selectedOption == 2) {
-        return appartements;
+        return appartements[0].name;      
       }
       else if (selectedOption == 3) {
-        return hotelsRestaurants;
+        return hotelsRestaurants[0].name;     
       }
     }
+    
+
+
+
+    document.querySelector(".valider").addEventListener("click", function(e) {
+      e.preventDefault();
+  
+      let title = document.getElementById("title").value;
+  
+      console.log(title);
+      let photo = localStorage.getItem('imgData');
+      console.log(photo);
+  
+      console.log(findSelectElts());
+      
+      console.log(localStorage.getItem('lastId'));
+      console.log(token.userId);
+  
+      if(photo === null) {
+        alert("Erreur: image Obligatoire");
+        return; 
+      }
+      if(title.trim() === "") {
+        alert("Erreur: Titre Obligatoire");
+        return;
+      }
+      else {
+        console.log(tokens);
+        fetch("http://localhost:5678/api/works", {
+          method: "POST",
+          body: JSON.stringify({
+            id: localStorage.getItem('lastId'),
+            title: title,
+            imageUrl: photo,
+            categoryId: findSelectElts(),
+            userId: token.userId
+          }),
+          headers: {
+            "Content-type": "application/json; charsert=UTF-8",
+            Authorization: `Bearer ${tokens}`
+          },
+        })
+        .then((res) => res.json()) 
+        .then((json) => console.log(json));
+      }
+    })
   })
-  .catch(function(err) {
-    // Une erreur est survenue
+  .catch((err) => {
+    console.log(err);
   });
 
-  document.querySelector(".valider").addEventListener("submit", function(e) {
-    e.preventDefault();
-    let title = document.getElementById("title").value;
-    let photo = document.querySelector("#photo").value;
-    console.log(photo);
-    let selectedOption = document.querySelector("option[name='option']:selected").value;
-    if(photo === "") {
-      alert("Erreur: image Obligatoire");
-      return; 
-    }
-    if(title.trim() === "") {
-      alert("Erreur: Titre Obligatoire");
-      return;
-    }
-    else {
-      fetch("http://localhost:5678/api/works", {
-        method: "POST",
-        body: JSON.stringify({
-          id: last.id,
-          title: title,
-          imageUrl: photo,
-          categoryId: selectedOption,
-          userId: token[10],
-        }),
-        headers: {
-          "Content-type": "application/json; charsert=UTF-8",
-        },
-      })
-      .then((res) => res.json()) 
-      .then((json) => console.log(json));
-    }
-  })
+
+
+
+
+  // document.querySelector(".valider").addEventListener("click", function(e) {
+  //   e.preventDefault();
+
+  //   let title = document.getElementById("title").value;
+
+  //   console.log(title);
+  //   let photo = localStorage.getItem('imgData');
+  //   console.log(photo);
+
+    
+    
+  //   console.log(localStorage.getItem('lastId'));
+  //   console.log(token.userId);
+
+  //   if(photo === null) {
+  //     alert("Erreur: image Obligatoire");
+  //     return; 
+  //   }
+  //   if(title.trim() === "") {
+  //     alert("Erreur: Titre Obligatoire");
+  //     return;
+  //   }
+  //   else {
+  //     console.log(tokens);
+  //     fetch("http://localhost:5678/api/works", {
+  //       method: "POST",
+  //       body: JSON.stringify({
+  //         id: localStorage.getItem('lastId'),
+  //         title: title,
+  //         imageUrl: photo,
+  //         categoryId: valeurCherchee,
+  //         userId: token.userId
+  //       }),
+  //       headers: {
+  //         "Content-type": "application/json; charsert=UTF-8",
+  //         Authorization: `Bearer ${tokens}`
+  //       },
+  //     })
+  //     .then((res) => res.json()) 
+  //     .then((json) => console.log(json));
+  //   }
+  // })
 }
 
