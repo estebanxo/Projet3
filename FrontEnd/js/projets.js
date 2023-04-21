@@ -239,18 +239,32 @@ if (token) {
   }
 
 
-  
 
   function afficheImage(input) {
     let file = document.querySelector('input[type="file"]').files;
-    console.log(file[0]);
+    console.log(file[0].name);
+
+    let UrlPageCourante = window.location.href;
+    let Url = new URL(UrlPageCourante);
+    let protocol = Url.protocol;
+    let host = Url.host;
+
+    console.log(Url);
+    console.log(protocol);
+    console.log(host);
+
+    const imgUrl = `${protocol}//localhost:5678/images/${file[0].name}`;
+    localStorage.setItem('imgUrl', imgUrl);
+    console.log(localStorage.getItem('imgUrl'));
+ 
+
     if(file.length = 1) {
       document.querySelector("#img").style.display = "none";
       document.querySelector(".buttonAjoutPhoto").style.display = "none";
       document.querySelector("#photo").style.display = "none";
       document.querySelector("#imgNotification").style.display = "none";
       document.querySelector(".containerPhoto").style.padding = "0";
-      let newAffichage = '<img src="" id="resultat">';
+      let newAffichage = '<img id="resultat">';
       document.querySelector(".containerPhoto").innerHTML = newAffichage;
 
       
@@ -271,7 +285,8 @@ if (token) {
   
           reader.readAsDataURL(input.files[0]);
       }
-
+      
+      console.log(document.getElementById('resultat').src);
 
       bannerImage = document.getElementById('resultat');
       console.log(bannerImage);
@@ -302,7 +317,6 @@ if (token) {
   
 
 
-
   fetch("http://localhost:5678/api/categories")
   .then((res) => {
     if (res.ok) {
@@ -312,7 +326,7 @@ if (token) {
   .then((value) => {
 
     const objets = value.filter(obj => obj.id == 1);
-    console.log(objets[0]);
+    console.log(objets);
 
     const appartements = value.filter(obj => obj.id == 2);
     console.log(appartements[0]);
@@ -335,59 +349,90 @@ if (token) {
         return hotelsRestaurants[0].name;     
       }
     }
-    
-
-    //                                       requête Post 
-
-    document.querySelector(".valider").addEventListener("click", function(e) {
-      e.preventDefault();
-  
-      let title = document.getElementById("title").value;
-      console.log(title);
-
-      let photo = localStorage.getItem('imgData');
-      console.log(photo);
-  
-      console.log(findSelectElts());
-      
-      console.log(localStorage.getItem('lastId'));
-      
-      console.log(token.userId);
-  
-      if(photo === null) {
-        alert("Erreur: image Obligatoire");
-        return; 
-      }
-      if(title.trim() === "") {
-        alert("Erreur: Titre Obligatoire");
-        return;
-      }
-      else {
-        console.log(tokens);
-        fetch("http://localhost:5678/api/works", {
-          method: "POST",
-          body: JSON.stringify({
-            id: localStorage.getItem('lastId'),
-            title: title,
-            imageUrl: photo,
-            categoryId: findSelectElts(),
-            userId: token.userId
-          }),
-          headers: {
-            "Content-type": "application/json; charsert=UTF-8",
-            Authorization: `Bearer ${tokens}`
-          },
-        })
-        .then((res) => res.json()) 
-        .then((json) => console.log(json));
-      }
-    })
   })
   .catch((err) => {
     console.log(err);
   });
 
 
+  document.querySelector(".valider").addEventListener("click", function(e) {
+    e.preventDefault();
+
+    let title = document.getElementById("title").value;
+    console.log(title);
+
+    let photo = localStorage.getItem('imgUrl');
+    console.log(photo);
+
+    let categorie = document.getElementById('categorie').value;
+    console.log(categorie);
+    
+    console.log(localStorage.getItem('lastId'));
+    
+    console.log(token.userId);
+
+    if(photo === null) {
+      alert("Erreur: image Obligatoire");
+      return; 
+    }
+    if(title.trim() === "") {
+      alert("Erreur: Titre Obligatoire");
+      return;
+    }
+    else {
+      console.log(tokens);
+      fetch("http://localhost:5678/api/works", {
+        method: "POST",
+        body: JSON.stringify({
+          // id: localStorage.getItem('lastId'),
+          title: title,
+          image: photo,
+          category: categorie,
+          // userId: token.userId,
+        }),
+        headers: {
+          Accept: "application/json",
+          "Content-type": "multipart/form-data",
+          Authorization: 'Bearer ' + tokens,
+        },
+      })
+      .then((res) => res.json()) 
+      .then((json) => console.log(json));
+    }
+  })
+
+
+  // const form = document.getElementById("formAjoutPhoto");
+
+  // form.addEventListener('submit', (e) => {
+  //   e.preventDefault();
+
+  //   const formData = new FormData(form);
+
+  //   // let file = document.querySelector('input[type="file"]');
+  //   // console.log(file);
+  //   // formData.append('image', file.files[0]);
+
+  //   let photo = localStorage.getItem('imgData');
+  //   console.log(photo);
+
+  //   const res = Object.fromEntries(formData);
+  //   const payload = JSON.stringify(res);
+  //   console.log(payload);
+  //   console.log(res[0]);
+    
+
+  //   fetch("http://localhost:5678/api/works", {
+  //     method: "POST",
+  //     body: payload,
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       Authorization: `Bearer ${tokens}`,
+  //     }
+  //   })
+  //   .then(res => res.json())
+  //   .then(res => console.log(res));
+  // })
 
 
 
@@ -434,4 +479,3 @@ if (token) {
   //   }
   // })
 }
-
