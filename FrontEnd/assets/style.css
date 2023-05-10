@@ -220,7 +220,10 @@ nav ul li a:hover {
 	font-weight: 700;
 	color: var(--vert);
 }
-.modal {
+#modalSupr {
+	z-index: 2;
+}
+.modal, #modalSupr {
 	position: fixed;
 	display: flex;
 	align-items: center;
@@ -231,9 +234,21 @@ nav ul li a:hover {
 	height: 100%;
 	background: rgba(0, 0, 0, 0.3);
 }
-.modalWrapper {
+.modalWrapper{
 	overflow: auto;
 	width: 630px;
+	max-width: calc(100vw - 20px);
+	max-height: calc(100vh - 20px);
+	background: var(--white);
+	padding: 30px;
+	border-radius: 10px;
+	display: flex;
+	flex-direction: column;
+	justify-content: end;
+}
+#modalSupprWrapper {
+	overflow: auto;
+	width: 540px;
 	max-width: calc(100vw - 20px);
 	max-height: calc(100vh - 20px);
 	background: var(--white);
@@ -250,9 +265,11 @@ nav ul li a:hover {
 }
 #jsModalReturn {
 	display: none;
+	background: var(--white);
 }
 #jsModalClose {
 	margin-left: 585px;
+	background: var(--white);
 }
 #titleModal {
 	font-family: 'Work Sans';
@@ -364,7 +381,7 @@ input[name="title"]:hover {
 .fa-trash-can {
 	color: var(--white);
 }
-.edit {
+.poubelle {
 	position: absolute;
 	top: 6px;
 	right: 6px;
@@ -372,18 +389,16 @@ input[name="title"]:hover {
 	border-radius: 2px;
 	padding: 4px;
 	cursor: pointer;
+	user-select: none;
 }
-.edit:hover {
+.poubelle:hover {
 	background: var(--vert);
+}
+.edit {
+	display: none;
 }
 .edition {
 	position: relative;
-}
-input[name="delete"] {
-	display: none;
-}
-input[name="delete"]:checked ~ .edit {
-	background: var(--vert);
 }
 .btn {
 	display: flex;
@@ -397,6 +412,7 @@ input[name="delete"]:checked ~ .edit {
 	color: var(--rouge);
 	border: none;
 	cursor: pointer;
+	background: var(--white);
 }
 .btn .supprimer:hover {
 	color: var(--vert);
@@ -439,13 +455,44 @@ input[name="delete"]:checked ~ .edit {
 	height: 50px;
 	transition: 0.3s;
 }
-.valider:hover {
+/* .valider:hover {
 	color: var(--vert);
 	background: var(--white);
 	transition: 0.2s;
-}
+} */
 #portfolio input[name="filtre"] {
 	display: none;
+}
+#modalSupprWrapper h3 {
+	color: var(--vert);
+	font-weight: 700;
+	font-size: 20px;
+	text-align: center;
+	margin-bottom: 30px;
+}
+#containerChoix {
+	display: flex;
+	justify-content: center;
+	gap: 15px;
+	margin-bottom: 5px;
+}
+#oui, #non {
+	border: var(--vert) 1px solid;
+    border-radius: 25px;
+    padding: 10px 20px;
+    user-select: none;
+    flex-wrap: nowrap;
+	cursor: pointer;
+	font-weight: 700;
+	font-family: 'syne';
+	font-size: 16px;
+	color: var(--vert);
+	transition: 0.2s;
+}
+#oui:hover, #non:hover {
+	background: var(--vert);
+	color: var(--white);
+	transition: 0.2s;
 }
 .filtres label span {
 	border: var(--vert) 1px solid;
@@ -556,6 +603,18 @@ footer nav ul {
 }
 #login > * {
 	text-align: center;
+}
+#logErreur {
+	color: var(--rouge);
+	display: none;
+}
+#logVide {
+	color: var(--rouge);
+	display: none;
+}
+.vide {
+	color: var(--rouge);
+	display: none;
 }
 #login h2{
 	margin-bottom: 20px;

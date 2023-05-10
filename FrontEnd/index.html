@@ -63,13 +63,22 @@
 						<button class="jsModal" id="jsModalReturn"> <i class="fa-sharp fa-solid fa-arrow-left-long"></i> </button>
 						<button class="jsModal" id="jsModalClose"> <i class="fa-sharp fa-solid fa-xmark"></i> </button>
 					</div>
+					<div id="modalSupr" aria-hidden="true" role="dialog" style="display: none;">
+						<div id='modalSupprWrapper' class='jsModalSupprStop'>
+							<h3>Souhaitez-vous vraiment supprimer cette photo ?</h3>
+							<div id="containerChoix">
+								<button class="choix" id="oui"> Oui </button>
+								<button class="choix" id="non"> Non </button>
+							</div>
+						</div>
+					</div>
 					<h3 id="titleModal">Galerie photo</h3>
 					<h3 id="titleModal2">Ajout photo</h3>
 					<form id="formAjoutPhoto">
 						<div id="galeriePhoto"></div>
 						<div class="btn">
 							<button class="buttonPhoto" type="button">Ajouter une photo</button>
-							<input class="valider" name="valider" type="submit" value="Valider">
+							<button class="valider" type="button" type="submit" disabled>Valider</button>
 							<button class="supprimer" type="button">Supprimer la galerie</button>
 						</div>
 					</form> 

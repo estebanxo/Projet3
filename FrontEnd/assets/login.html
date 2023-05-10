@@ -15,9 +15,9 @@
         <h1>Sophie Bluel <span>Architecte d'inteérieur</span></h1>
         <nav>
             <ul>
-                <a href="../index.html#portfolio"><li>projets</li></a>
-                <a href="../index.html#contact"><li>contact</li></a>
-                <a href="#"><li id="bold">login</li></a>
+                <li><a href="../index.html#portfolio">projets</a></li>
+                <li><a href="../index.html#contact">contact</a></li>
+                <li id="bold"><a href="#">login</a></li>
                 <li><img src="./icons/instagram.png" alt="Instagram"></li>
             </ul>
         </nav>
@@ -25,10 +25,12 @@
     <main class="main">
         <section id="login">
             <h2>Log In</h2>
+            <p id="logErreur">Email ou mot de passe incorrect !</p>
+            <p id="logVide">Veuiller remplir les champs obligatoire !</p>
             <form method="post" action="http://localhost:5678/api/users/login">
-                <label  for="email">Email</label>
+                <label  for="email">Email <span class="vide">*</span></label>
                 <input type="email" name="loginInfo" id="email">
-                <label for="password">Password</label>
+                <label for="password">Password <span class="vide">*</span></label>
                 <input type="password" name="loginInfo" id="password">
                 <input type="submit" id="submit" value="Envoyer">
             </form>
