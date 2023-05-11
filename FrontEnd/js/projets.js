@@ -1,3 +1,4 @@
+console.log("début");
 function affichages(tous) {
   let affichage = "<div>";
   for (let projet of tous) {
@@ -83,7 +84,9 @@ fetch("http://localhost:5678/api/works")
   })
 })
 .catch(function(err) {
-  // Une erreur est survenue
+  if (err.status > 500) {
+    alert("Une erreur serveur c'est produite !")
+  }
 });
 
 
@@ -184,7 +187,9 @@ if (token) {
     document.querySelector(".modalLink").addEventListener("click", affichagesGalleriePhoto(tous));
   })
   .catch(function(err) {
-    // Une erreur est survenue
+    if (err.status > 500) {
+      alert("Une erreur serveur c'est produite !");
+    }
   });
 
 
@@ -211,9 +216,9 @@ if (token) {
     const array = [document.querySelectorAll(".edit")];
     console.log(array);
 
-    const stopPropagation = function(e) {
-      e.stopPropagation();
-    }
+    // const stopPropagation = function(e) {
+    //   e.stopPropagation();
+    // }
 
 
     document.querySelectorAll(".edit").forEach(element => {
@@ -244,6 +249,12 @@ if (token) {
           .then((reponse) => reponse.json())
           .catch(function(err) {
             console.log("Une erreur est survenue");
+            if (err.status > 400) {
+              alert("Vous n'êtes pas autorisé à suprimer ce contenus veuillez vous connecter !");
+            }
+            if (err.status > 500) {
+              alert("Une erreur serveur c'est produite !");
+            }
           });
           modale.style.display = "none";
         })
@@ -251,6 +262,17 @@ if (token) {
     });
   }
   document.querySelector(".modalLink").addEventListener("click", suppressionPhoto);
+
+
+
+  
+
+  function controleur(e) {
+    console.log("on passe ici !");
+    console.log(e);
+    
+  }
+
 
 
   let file = "";
@@ -326,8 +348,11 @@ if (token) {
         console.log(tou);
         document.querySelector("#jsModalReturn").addEventListener("click", affichagesGalleriePhoto(tou));
       })
-      .catch(function(err) {
+      .catch((res) => {
         console.log("une erreur est survenue !");
+        if (res.status > 500) {
+          alert("Une erreur serveur c'est produite !");
+        }
       });
       
       console.log(document.querySelector(".edit"));
@@ -424,9 +449,16 @@ if (token) {
     })
     .then((res) => res.json()) 
     .then((json) => console.log(json))
-    .catch(error => console.error("Erreur lors de l'ajout du projet :", error));
+    .catch((err) => {
+      if (err > 400) {
+        alert("Oups! Vous ne pouvez pas poster une nouvelle photo, Veuillez vous connecter !");
+      }
+      if (err > 500) {
+        alert("Oups! Une erreur serveur c'est produite !");
+      }
+    });
   });
   
 
-
 }
+window.addEventListener("click", controleur);

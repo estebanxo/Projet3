@@ -48,7 +48,9 @@ let button = form.submit.addEventListener("click", (e)=> {
       }
     })
     .catch((err) => {
-      console.log(err);
+      if (err.status > 500) {
+        alert("Une erreur serveur c'est produite !");
+      }
     });
   }
 });
