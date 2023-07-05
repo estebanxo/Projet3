@@ -347,6 +347,7 @@ if (token) {
         const tou = value.filter(obj => obj.categoryId > 0);
         console.log(tou);
         affichagesGalleriePhoto(tou);
+        suppressionPhoto();
       })
       .catch((res) => {
         console.log("une erreur est survenue !");
@@ -356,7 +357,6 @@ if (token) {
       });
       
       console.log(document.querySelector(".edit"));
-      suppressionPhoto();
 
       document.querySelector(".containerPhoto").style.display = "none";
       document.querySelector(".weight").style.display = "none";
