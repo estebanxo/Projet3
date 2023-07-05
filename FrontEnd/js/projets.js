@@ -346,7 +346,7 @@ if (token) {
       .then(function (value) {
         const tou = value.filter(obj => obj.categoryId > 0);
         console.log(tou);
-        document.querySelector("#jsModalReturn").addEventListener("click", affichagesGalleriePhoto(tou));
+        affichagesGalleriePhoto(tou);
       })
       .catch((res) => {
         console.log("une erreur est survenue !");
