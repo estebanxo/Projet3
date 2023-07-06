@@ -10,7 +10,7 @@ function affichages(tous) {
 function affichagesGalleriePhoto(tous) {
   let affichage = '<div id="imgWorks">';
   for (let projet of tous) {
-    affichage += `<figure class="edition">    <img src="${projet.imageUrl}" alt="${projet.title}"></img>  <i class="fa-sharp fa-solid fa-arrows-up-down-left-right"></i>  <label> <input class="edit" type="checkbox" value="${projet.id}"> <span class="poubelle"> <i class="fa-sharp fa-solid fa-trash-can"></i> </span> </label>     <figcaption> éditer </figcaption>    </figure>`;
+    affichage += `<figure class="edition" id="${projet.id}">    <img src="${projet.imageUrl}" alt="${projet.title}"></img>  <i class="fa-sharp fa-solid fa-arrows-up-down-left-right"></i>  <label> <input class="edit" type="checkbox" value="${projet.id}"> <span class="poubelle"> <i class="fa-sharp fa-solid fa-trash-can"></i> </span> </label>     <figcaption> éditer </figcaption>    </figure>`;
   }
   affichage += "</div>";
   document.querySelector("#galeriePhoto").innerHTML = affichage;
@@ -214,6 +214,8 @@ if (token) {
           modale.style.display = "none";
         })
         document.getElementById('oui').addEventListener('click', function () {
+          console.log(document.getElementById(valueToDelete));
+          document.getElementById(valueToDelete).remove();
           fetch(`http://localhost:5678/api/works/${valueToDelete}`, {
             method: "DELETE",
             body: null,
@@ -233,23 +235,6 @@ if (token) {
           });
 
           modale.style.display = "none";
-
-          fetch("http://localhost:5678/api/works")
-          .then(function(res) {
-            if (res.ok) {
-              return res.json();
-            }
-          })
-          .then(function (value) {
-            const tous = value.filter(obj => obj.categoryId > 0);
-            console.log(tous);
-            document.querySelector(".modalLink").addEventListener("click", affichagesGalleriePhoto(tous));
-          })
-          .catch(function(err) {
-            if (err.status > 500) {
-              alert("Une erreur serveur c'est produite !");
-            }
-          });
         })
       })
     });
@@ -263,7 +248,6 @@ if (token) {
   function controleur(e) {
     console.log("on passe ici !");
     console.log(e);
-    
   }
 
 
