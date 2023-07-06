@@ -374,6 +374,10 @@ input[name="title"]:hover {
 	transition: 0.3s;
 	cursor: pointer;
 }
+#errNotification1, #errNotification3, #errNotification4{
+	color: var(--rouge);
+}
+
 .edition:hover > .fa-arrows-up-down-left-right {
 	z-index: 1;
 	transition: 0.3s;

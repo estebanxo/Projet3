@@ -15,28 +15,7 @@ function affichagesGalleriePhoto(tous) {
   affichage += "</div>";
   document.querySelector("#galeriePhoto").innerHTML = affichage;
 }
-// function controleAjoutPhoto() {
-//   let titre = document.querySelector("#title").value;
-//   let categorie = document.getElementById('categorie').value;
-    
-//   if (titre == "" || categorie == "0" || file == "") {
-//     console.log("Rien ne change");
-//   } else {
-//     console.log("yo");
-//     valider.removeAttribute('disabled');
-//     valider.style.background = "var(--vert)";
-//     valider.addEventListener('mouseover', () => {
-//       valider.style.color = "var(--vert)";
-//       valider.style.background = "var(--white)";
-//       valider.style.transition = "0.3s";
-//     })
-//     valider.addEventListener('mouseout', () => {
-//       valider.style.color = "var(--white)";
-//       valider.style.background = "var(--vert)";
-//       valider.style.transition = "0.3s";
-//     })
-//   }
-// }
+
 
 
 fetch("http://localhost:5678/api/works")
@@ -216,10 +195,6 @@ if (token) {
     const array = [document.querySelectorAll(".edit")];
     console.log(array);
 
-    // const stopPropagation = function(e) {
-    //   e.stopPropagation();
-    // }
-
 
     document.querySelectorAll(".edit").forEach(element => {
       console.log(element);
@@ -256,7 +231,25 @@ if (token) {
               alert("Une erreur serveur c'est produite !");
             }
           });
+
           modale.style.display = "none";
+
+          fetch("http://localhost:5678/api/works")
+          .then(function(res) {
+            if (res.ok) {
+              return res.json();
+            }
+          })
+          .then(function (value) {
+            const tous = value.filter(obj => obj.categoryId > 0);
+            console.log(tous);
+            document.querySelector(".modalLink").addEventListener("click", affichagesGalleriePhoto(tous));
+          })
+          .catch(function(err) {
+            if (err.status > 500) {
+              alert("Une erreur serveur c'est produite !");
+            }
+          });
         })
       })
     });
@@ -286,19 +279,20 @@ if (token) {
     document.querySelector(".buttonPhoto").style.display = "none";
     document.querySelector(".valider").style.display = "inline-block";
     document.querySelector(".supprimer").style.display = "none";
+    
     let affichage = "<div>";
 
     affichage += '<label class="containerPhoto" for="photo">';
     affichage += '<span id="img"> <i class="fa-regular fa-image"></i> </span>';
-    affichage += '<span class="buttonAjoutPhoto"> + Ajouter photo </span>';
+    affichage += '<span class="buttonAjoutPhoto"> + Ajouter photo <strong id="errNotification1">*</strong></span>';
     affichage += '<input type="file" id="photo" name="photo" accept=".jpg, .jpeg, .png" onchange="afficheImage(this);">';
     affichage += '<span id="imgNotification">jpg, png : 4mo max</span>';
     affichage += '</label>';
 
-    affichage += '<label class="weight" for="title">Titre</label>';
+    affichage += '<label class="weight" for="title">Titre <strong id="errNotification3">*</strong></label>';
     affichage += '<input type="text" name="title" id="title">';
 
-    affichage += '<label class="weight" for="categorie">Catégorie</label>';
+    affichage += '<label class="weight" for="categorie">Catégorie <strong id="errNotification4">*</strong></label>';
     affichage += '<select name="categorie" id="categorie">';
     affichage += '<option value="0" selected></option>';
     affichage += '<option value="1">Objets</option>';
@@ -308,6 +302,8 @@ if (token) {
 
     affichage += "</div>";
     document.querySelector("#galeriePhoto").innerHTML = affichage;
+                          //  Notifications d'erreur pour l'ajout de photos
+    document.getElementById('formAjoutPhoto').addEventListener('change', errNotif);
     document.getElementById('formAjoutPhoto').addEventListener('change', controleAjoutPhoto);
 
                             //  Si je clique sur la flèche de retour en arrière
@@ -367,11 +363,30 @@ if (token) {
     });
   })
 
+  function errNotif() {
+    console.log("ici");
+    let titre = document.querySelector("#title").value;
+    let categorie = document.getElementById('categorie').value;
+
+    if (titre == "") {
+      console.log("rien ne ce passe(titre)");
+    }else{
+      document.getElementById("errNotification3").style.display = "none";
+    }
+    console.log(categorie);
+    if (categorie === "0") {
+      console.log("rien ne ce passe(catégorie)");
+      console.log(categorie);
+    }else{
+      document.getElementById("errNotification4").style.display = "none";
+    }
+  }
+
 
   function controleAjoutPhoto() {
     let titre = document.querySelector("#title").value;
     let categorie = document.getElementById('categorie').value;
-      
+
     if (titre == "" || categorie == "0" || file == "") {
       console.log("Rien ne change");
     } else {
@@ -449,6 +464,9 @@ if (token) {
     })
     .then((res) => res.json()) 
     .then((json) => console.log(json))
+    .then(function () {
+      window.location.reload();
+    })
     .catch((err) => {
       if (err > 400) {
         alert("Oups! Vous ne pouvez pas poster une nouvelle photo, Veuillez vous connecter !");
