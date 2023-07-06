@@ -2,7 +2,7 @@ console.log("début");
 function affichages(tous) {
   let affichage = "<div>";
   for (let projet of tous) {
-    affichage += `<figure>    <img src="${projet.imageUrl}" alt="${projet.title}"></img>   <figcaption> ${projet.title} </figcaption>    </figure>`;
+    affichage += `<figure id="${projet.id}2">    <img src="${projet.imageUrl}" alt="${projet.title}"></img>   <figcaption> ${projet.title} </figcaption>    </figure>`;
   }
   affichage += "</div>";
   document.querySelector(".gallery").innerHTML = affichage;
@@ -214,8 +214,13 @@ if (token) {
           modale.style.display = "none";
         })
         document.getElementById('oui').addEventListener('click', function () {
+
           console.log(document.getElementById(valueToDelete));
+          console.log(document.getElementById(valueToDelete + "2"));
           document.getElementById(valueToDelete).remove();
+          document.getElementById(valueToDelete + "2").remove();
+
+
           fetch(`http://localhost:5678/api/works/${valueToDelete}`, {
             method: "DELETE",
             body: null,
