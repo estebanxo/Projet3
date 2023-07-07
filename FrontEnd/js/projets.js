@@ -110,6 +110,24 @@ if (token) {
     modal.addEventListener('click', closeModal);
     document.querySelector("#jsModalClose").addEventListener("click", closeModal);
     document.querySelector(".jsModalStop").addEventListener("click", stopPropagation);
+
+    fetch("http://localhost:5678/api/works")
+    .then(function(res) {
+      if (res.ok) {
+        return res.json();
+      }
+    })
+    .then(function (value) {
+      const tous = value.filter(obj => obj.categoryId > 0);
+      console.log(tous);
+      affichagesGalleriePhoto(tous);
+      suppressionPhoto();
+    })
+    .catch(function(err) {
+      if (err.status > 500) {
+        alert("Une erreur serveur c'est produite !");
+      }
+    });
   })
 
 
@@ -154,39 +172,7 @@ if (token) {
     }
   })
 
-  fetch("http://localhost:5678/api/works")
-  .then(function(res) {
-    if (res.ok) {
-      return res.json();
-    }
-  })
-  .then(function (value) {
-    const tous = value.filter(obj => obj.categoryId > 0);
-    console.log(tous);
-    document.querySelector(".modalLink").addEventListener("click", affichagesGalleriePhoto(tous));
-  })
-  .catch(function(err) {
-    if (err.status > 500) {
-      alert("Une erreur serveur c'est produite !");
-    }
-  });
 
-
-  let findSelected = () => {
-    let selected = document.querySelector("input[name='filtre']:checked").value;
-    if (selected == 0) {
-      affichages(tous);
-    }
-    else if (selected == 1) {
-      affichages(objets);
-    }
-    else if (selected == 2) {
-      affichages(appartements);
-    }
-    else if (selected == 3) {
-      affichages(hotelsRestaurants);
-    }
-  }
 
 
   function suppressionPhoto() {
@@ -296,60 +282,7 @@ if (token) {
     document.getElementById('formAjoutPhoto').addEventListener('change', controleAjoutPhoto);
 
                             //  Si je clique sur la flèche de retour en arrière
-    document.querySelector("#jsModalReturn").addEventListener("click", function() {
-// ***                             controle de l'ajout de photo(remove)                 ***
-      document.getElementById('formAjoutPhoto').removeEventListener('change', controleAjoutPhoto);
-      valider.setAttribute('disabled','disabled');
-      valider.style.background = "#A7A7A7";
-      valider.removeEventListener('mouseover', () => {
-        valider.style.color = "var(--vert)";
-        valider.style.background = "var(--white)";
-        valider.style.transition = "0.3s";
-      })
-      valider.removeEventListener('mouseout', () => {
-        valider.style.color = "var(--white)";
-        valider.style.background = "var(--vert)";
-        valider.style.transition = "0.3s";
-      })
-// ***                                                                                  ***
-
-      document.querySelector("#jsModalReturn").style.display = "none";
-      document.querySelector("#titleModal").style.display = "block";
-      document.querySelector("#titleModal2").style.display = "none";
-      document.querySelector("#galeriePhoto div").style.display = "grid";
-      document.querySelector(".buttonPhoto").style.display = "block";
-      document.querySelector(".valider").style.display = "none";
-      document.querySelector(".supprimer").style.display = "block";
-
-
-      fetch("http://localhost:5678/api/works")
-      .then(function(res) {
-        if (res.ok) {
-          return res.json();
-        }
-      })
-      .then(function (value) {
-        const tou = value.filter(obj => obj.categoryId > 0);
-        console.log(tou);
-        affichagesGalleriePhoto(tou);
-        suppressionPhoto();
-      })
-      .catch((res) => {
-        console.log("une erreur est survenue !");
-        if (res.status > 500) {
-          alert("Une erreur serveur c'est produite !");
-        }
-      });
-      
-      console.log(document.querySelector(".edit"));
-
-      document.querySelector(".containerPhoto").style.display = "none";
-      document.querySelector(".weight").style.display = "none";
-      document.querySelector("label[for='categorie']").style.display = "none";
-      document.querySelector("#categorie").style.display = "none";
-      document.querySelector("#title").style.display = "none";
-      console.log(document.querySelector('figure label input[type="checkbox"]'));
-    });
+    document.querySelector("#jsModalReturn").addEventListener("click", RetourEnArriere);
   })
 
   function errNotif() {
@@ -393,6 +326,61 @@ if (token) {
         valider.style.transition = "0.3s";
       })
     }
+  }
+
+
+  function RetourEnArriere() {
+    // ***                             controle de l'ajout de photo(remove)                 ***
+    document.getElementById('formAjoutPhoto').removeEventListener('change', errNotif);
+    document.getElementById('formAjoutPhoto').removeEventListener('change', controleAjoutPhoto);
+    valider.setAttribute('disabled','disabled');
+    valider.style.background = "#A7A7A7";
+    valider.removeEventListener('mouseover', () => {
+      valider.style.color = "var(--vert)";
+      valider.style.background = "var(--white)";
+      valider.style.transition = "0.3s";
+    })
+    valider.removeEventListener('mouseout', () => {
+      valider.style.color = "var(--white)";
+      valider.style.background = "var(--vert)";
+      valider.style.transition = "0.3s";
+    })
+    // ***                                                                                  ***
+      
+    document.querySelector("#jsModalReturn").style.display = "none";
+    document.querySelector("#titleModal").style.display = "block";
+    document.querySelector("#titleModal2").style.display = "none";
+    document.querySelector("#galeriePhoto div").style.display = "grid";
+    document.querySelector(".buttonPhoto").style.display = "block";
+    document.querySelector(".valider").style.display = "none";
+    document.querySelector(".supprimer").style.display = "block";
+      
+      
+    fetch("http://localhost:5678/api/works")
+    .then(function(res) {
+      if (res.ok) {
+        return res.json();
+      }
+    })
+    .then(function (value) {
+      const tou = value.filter(obj => obj.categoryId > 0);
+      console.log(tou);
+      affichagesGalleriePhoto(tou);
+      suppressionPhoto();
+    })
+    .catch((res) => {
+      console.log("une erreur est survenue !");
+      if (res.status > 500) {
+        alert("Une erreur serveur c'est produite !");
+      }
+    });
+            
+      
+    document.querySelector(".containerPhoto").style.display = "none";
+    document.querySelector(".weight").style.display = "none";
+    document.querySelector("label[for='categorie']").style.display = "none";
+    document.querySelector("#categorie").style.display = "none";
+    document.querySelector("#title").style.display = "none";
   }
 
 
@@ -453,9 +441,6 @@ if (token) {
     })
     .then((res) => res.json()) 
     .then((json) => console.log(json))
-    .then(function () {
-      window.location.reload();
-    })
     .catch((err) => {
       if (err > 400) {
         alert("Oups! Vous ne pouvez pas poster une nouvelle photo, Veuillez vous connecter !");
@@ -464,8 +449,55 @@ if (token) {
         alert("Oups! Une erreur serveur c'est produite !");
       }
     });
+
+    RetourEnArriere();
+    
+    // Fermeture de la modale
+    modal.style.display = "none";
+    modal.setAttribute('aria-hidden', 'true');
+    modal.removeAttribute('aria-modal');
+    modal.removeEventListener('click', closeModal);
+    document.querySelector("#jsModalClose").removeEventListener("click", closeModal);
+    document.querySelector(".jsModalStop").removeEventListener("click", stopPropagation);
+
+
+
+    fetch("http://localhost:5678/api/works")
+    .then(function(res) {
+      if (res.ok) {
+        return res.json();
+      }
+    })
+    .then(function (value) {
+      const tous = value.filter(obj => obj.categoryId > 0);
+      console.log(tous);
+      affichages(tous);
+    })
+    .catch(function(err) {
+      if (err.status > 500) {
+        alert("Une erreur serveur c'est produite !")
+      }
+    });
   });
-  
+
+  // document.getElementsByClassName('modalLink').addEventListener('click', function () {
+  //   fetch("http://localhost:5678/api/works")
+  //   .then(function(res) {
+  //     if (res.ok) {
+  //       return res.json();
+  //     }
+  //   })
+  //   .then(function (value) {
+  //     const tous = value.filter(obj => obj.categoryId > 0);
+  //     console.log(tous);
+  //     affichagesGalleriePhoto(tous);
+  //   })
+  //   .catch(function(err) {
+  //     if (err.status > 500) {
+  //       alert("Une erreur serveur c'est produite !");
+  //     }
+  //   });
+  // })
 
 }
 window.addEventListener("click", controleur);
