@@ -8,19 +8,15 @@ let button = form.submit.addEventListener("click", (e)=> {
   e.preventDefault();
   let email = document.querySelector("#email").value;
   let password = document.querySelector("#password").value;
-  console.log(email);
-  console.log(password);
 
   if (email == "" || password == "") {
     document.getElementById('logVide').style.display = "block";
-    let vide = document.getElementsByClassName('vide');
-    console.log(vide[0]); 
+    let vide = document.getElementsByClassName('vide'); 
     vide[0].style.display = "inline-block";
     vide[1].style.display = "inline-block";
   }else {
     document.getElementById('logVide').style.display = "none";
-    let vide = document.getElementsByClassName('vide');
-    console.log(vide[0]); 
+    let vide = document.getElementsByClassName('vide'); 
     vide[0].style.display = "none";
     vide[1].style.display = "none";
 
@@ -38,7 +34,6 @@ let button = form.submit.addEventListener("click", (e)=> {
     .then((response) => response.json())
     .then((data) => {
       let userId = data.userId;
-      console.log(userId);
 
       if (userId == 1) {
         localStorage.setItem('tokens', JSON.stringify(data));

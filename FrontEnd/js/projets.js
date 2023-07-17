@@ -1,4 +1,3 @@
-console.log("début");
 function affichages(tous) {
   let affichage = "<div>";
   for (let projet of tous) {
@@ -26,17 +25,13 @@ fetch("http://localhost:5678/api/works")
 })
 .then(function (value) {
   const tous = value.filter(obj => obj.categoryId > 0);
-  console.log(tous);
-  const last = tous[tous.length-1];
-  console.log(last.id + 1);
-  localStorage.setItem('lastId', JSON.stringify(last.id + 1));
 
   const objets = value.filter(obj => obj.categoryId == 1);
-  console.log(objets);
+
   const appartements = value.filter(obj => obj.categoryId == 2);
-  console.log(appartements);
+
   const hotelsRestaurants = value.filter(obj => obj.categoryId == 3);
-  console.log(hotelsRestaurants);
+
   
   let elts = document.querySelectorAll("input[name='filtre']");
   
@@ -70,13 +65,12 @@ fetch("http://localhost:5678/api/works")
 
 
 
-console.log(localStorage.getItem('lastId'));
-console.log(localStorage.getItem('tokens'));
+
 const token = JSON.parse(localStorage.getItem('tokens'));
 const tokens = token.token;
-console.log(tokens);
 
 
+//                        Une fois connecté
 if (token) {
   document.querySelector('#in').style.display = "none";
   document.querySelector('#out').style.display = "inline";
@@ -96,15 +90,9 @@ if (token) {
 
 
   let modal = document.querySelector("#modal1");
-  const focusableSelector = 'button, a';
-  let focusable = [];
-  let previouslyFocusedElement = null;
 
   document.querySelector(".modalLink").addEventListener("click", function() {
-    focusable = Array.from(modal.querySelectorAll(focusableSelector));
-    previouslyFocusedElement = document.querySelector(':focus');
     modal.style.display = null;
-    focusable[0].focus();
     modal.removeAttribute('aria-hidden');
     modal.setAttribute('aria-modal', 'true');
     modal.addEventListener('click', closeModal);
@@ -134,7 +122,6 @@ if (token) {
   const closeModal = function (e) {
     e.preventDefault();
     if (modal.style.display = "none") return
-    if (previouslyFocusedElement !== null) previouslyFocusedElement.focus();
     modal.style.display = "none";
     modal.setAttribute('aria-hidden', 'true');
     modal.removeAttribute('aria-modal');
@@ -146,63 +133,31 @@ if (token) {
   const stopPropagation = function(e) {
     e.stopPropagation();
   }
-  const focusInModal = function (e) {
-    e.preventDefault();
-    let index = focusable.findIndex(f => f === modal.querySelector(':focus'));
-    if (e.shiftKey === true) {
-      index--;
-    }else {
-      index++;
-    }
-    if (index >= focusable.length) {
-      index = 0;
-    }
-    if (index < 0) {
-      index = focusable.length -1;
-    }
-    focusable[index].focus();
-  }
-
-  window.addEventListener("keydown", function(e) {
-    if (e.key === "Escape" || e.key ==="Esc") {
-      closeModal(e);
-    }
-    else if (e.key === 'Tab' && modal !== null) {
-      focusInModal(e);
-    }
-  })
 
 
 
 
   function suppressionPhoto() {
-    console.log(document.querySelector(".edit"));
 
     const array = [document.querySelectorAll(".edit")];
-    console.log(array);
+    
 
 
     document.querySelectorAll(".edit").forEach(element => {
-      console.log(element);
       
       element.addEventListener('click', function () {
         let valueToDelete = this.value;
-        console.log(valueToDelete);
 
         let modale = document.getElementById('modalSupr');
         modale.style.display = null;
         modale.removeAttribute('aria-hidden');
         modale.setAttribute('aria-modal', 'true');
 
-        console.log(document.querySelectorAll('#choix'));
         document.getElementById('non').addEventListener('click', function () {
-          console.log("photo non supprimer");
           modale.style.display = "none";
         })
         document.getElementById('oui').addEventListener('click', function () {
 
-          console.log(document.getElementById(valueToDelete));
-          console.log(document.getElementById(valueToDelete + "2"));
           document.getElementById(valueToDelete).remove();
           document.getElementById(valueToDelete + "2").remove();
 
@@ -216,7 +171,6 @@ if (token) {
           })
           .then((reponse) => reponse.json())
           .catch(function(err) {
-            console.log("Une erreur est survenue");
             if (err.status > 400) {
               alert("Vous n'êtes pas autorisé à suprimer ce contenus veuillez vous connecter !");
             }
@@ -230,17 +184,6 @@ if (token) {
       })
     });
   }
-  document.querySelector(".modalLink").addEventListener("click", suppressionPhoto);
-
-
-
-  
-
-  function controleur(e) {
-    console.log("on passe ici !");
-    console.log(e);
-  }
-
 
 
   let file = "";
@@ -286,7 +229,6 @@ if (token) {
   })
 
   function errNotif() {
-    console.log("ici");
     let titre = document.querySelector("#title").value;
     let categorie = document.getElementById('categorie').value;
 
@@ -295,10 +237,8 @@ if (token) {
     }else{
       document.getElementById("errNotification3").style.display = "none";
     }
-    console.log(categorie);
     if (categorie === "0") {
       console.log("rien ne ce passe(catégorie)");
-      console.log(categorie);
     }else{
       document.getElementById("errNotification4").style.display = "none";
     }
@@ -364,7 +304,6 @@ if (token) {
     })
     .then(function (value) {
       const tou = value.filter(obj => obj.categoryId > 0);
-      console.log(tou);
       affichagesGalleriePhoto(tou);
       suppressionPhoto();
     })
@@ -388,7 +327,6 @@ if (token) {
   function afficheImage(input) {
     file = document.querySelector('input[type="file"]').files;
     file = file[0];
-    console.log(file);
 
 
     document.querySelector("#img").style.display = "none";
@@ -416,21 +354,13 @@ if (token) {
 
     let title = document.getElementById("title").value;
 
-    // const img = file;
-
     let categorie = document.getElementById('categorie').value;
-    
-
-    console.log(file, title, categorie);
 
     let formData = new FormData();
   
     formData.append("image", file);
     formData.append("title", title);
     formData.append("category", categorie);
-
-    console.log(formData);
-    
 
     fetch("http://localhost:5678/api/works", {
       method: "POST",
@@ -470,7 +400,6 @@ if (token) {
     })
     .then(function (value) {
       const tous = value.filter(obj => obj.categoryId > 0);
-      console.log(tous);
       affichages(tous);
     })
     .catch(function(err) {
@@ -479,25 +408,4 @@ if (token) {
       }
     });
   });
-
-  // document.getElementsByClassName('modalLink').addEventListener('click', function () {
-  //   fetch("http://localhost:5678/api/works")
-  //   .then(function(res) {
-  //     if (res.ok) {
-  //       return res.json();
-  //     }
-  //   })
-  //   .then(function (value) {
-  //     const tous = value.filter(obj => obj.categoryId > 0);
-  //     console.log(tous);
-  //     affichagesGalleriePhoto(tous);
-  //   })
-  //   .catch(function(err) {
-  //     if (err.status > 500) {
-  //       alert("Une erreur serveur c'est produite !");
-  //     }
-  //   });
-  // })
-
 }
-window.addEventListener("click", controleur);
