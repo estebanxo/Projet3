@@ -4,7 +4,7 @@ const form = {
   submit: document.querySelector("#submit")
 };
 
-let button = form.submit.addEventListener("click", (e)=> {
+form.submit.addEventListener("click", (e)=> {
   e.preventDefault();
   let email = document.querySelector("#email").value;
   let password = document.querySelector("#password").value;

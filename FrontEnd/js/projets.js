@@ -107,7 +107,6 @@ if (token) {
     })
     .then(function (value) {
       const tous = value.filter(obj => obj.categoryId > 0);
-      console.log(tous);
       affichagesGalleriePhoto(tous);
       suppressionPhoto();
     })
@@ -138,11 +137,7 @@ if (token) {
 
 
   function suppressionPhoto() {
-
-    const array = [document.querySelectorAll(".edit")];
     
-
-
     document.querySelectorAll(".edit").forEach(element => {
       
       element.addEventListener('click', function () {
@@ -369,8 +364,7 @@ if (token) {
       },
       body: formData,
     })
-    .then((res) => res.json()) 
-    .then((json) => console.log(json))
+    .then((res) => res.json())
     .catch((err) => {
       if (err > 400) {
         alert("Oups! Vous ne pouvez pas poster une nouvelle photo, Veuillez vous connecter !");
